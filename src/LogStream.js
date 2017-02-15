@@ -85,9 +85,6 @@ class LogStream extends Component {
     this.source.close()
   }
   render() {
-    // if (this.state.events.length > 10) {
-    //   this.source.close()
-    // }
     const { mapping } = this.props.config;
     const defaultColumn = '_source';
     let headerRows = [];
