@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import objectPath from 'object-path';
-import './styles.css'
+import './LogStream.styles.css'
 
 
 function getFieldValue(event, field) {
