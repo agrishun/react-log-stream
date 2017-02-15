@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import objectPath from 'object-path';
-import './LogStream.styles.css'
 
 
 function getFieldValue(event, field) {
@@ -106,7 +105,7 @@ class LogStream extends Component {
         this.state.events.map((event, index) => (
           <tr
             style={(event.match) ? {backgroundColor: event.match.bgColorOnMatch} : {}}
-            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : '')}
+            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd')}
             key={event.time}
           >
             {mapping.map(field => (
@@ -125,7 +124,7 @@ class LogStream extends Component {
         this.state.events.map((event, index) => (
           <tr
             style={(event.match) ? {backgroundColor: event.match.bgColorOnMatch} : {}}
-            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : '')}
+            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd')}
             key={event.time}
           >
             <td className="react-event-log__row__cell">{event.source}</td>
