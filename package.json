@@ -8,7 +8,8 @@
   },
   "keywords": [
     "react",
-    "log",
+    "logs",
+    "stream",
     "server-sent-events"
   ],
   "repository": {
@@ -23,9 +24,11 @@
     "deploy": "git pull --rebase origin master && git push origin master"
   },
   "dependencies": {
-    "object-path": "^0.11.3",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "object-path": "^0.11.3"
+  },
+  "peerDependencies": {
+    "react": "0.14.x - 15.x",
+    "react-dom": "0.14.x - 15.x"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -37,5 +40,10 @@
     "html-webpack-plugin": "^2.26.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015", "stage-0", "react"
+    ]
   }
 }
