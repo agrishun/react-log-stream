@@ -2,9 +2,12 @@
   "name": "react-log-stream",
   "version": "0.1.0",
   "private": true,
-  "author": "Anton Grishun",
+  "author": "Anton Grishun <agrishun@me.com> (https://github.com/agrishun)",
   "devDependencies": {
     "react-scripts": "0.9.0"
+  },
+  "bugs": {
+    "url": "https://github.com/agrishun/react-stream-log/issues"
   },
   "dependencies": {
     "object-path": "^0.11.3",
