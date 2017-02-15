@@ -1,0 +1,14 @@
+.react-event-log {
+  font-family: Lucida Console,Monaco,monospace;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.react-event-log__row--even {
+  background: #F1F1F1;
+}
+
+.react-event-log__header-row__cell, .react-event-log__row__cell {
+  text-align: left;
+  padding: 10px;
+}
