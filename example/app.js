@@ -33,7 +33,7 @@ const config = {
 
 ReactDOM.render(
   <LogStream
-    streamUrl="https://sse-dashboard.herokuapp.com/"
+    url="https://sse-dashboard.herokuapp.com/"
     config={config}
   />,
   document.getElementById('root')

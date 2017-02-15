@@ -23,7 +23,7 @@ function createEvent(event, matching) {
     data: JSON.parse(event.data),
     source: event.data
   }
-  if (matching.length) {
+  if (matching && matching.length) {
     for (let i = 0; i < matching.length; i++){
       let {
         pattern,
@@ -31,7 +31,7 @@ function createEvent(event, matching) {
         paths
       } = matching[i];
       let isMatch = false;
-      if (paths.length) {
+      if (paths && paths.length) {
         isMatch = paths.every(path => {
           const fieldValue = objectPath.get(newEvent.data, path);
           return new RegExp(pattern).test(fieldValue);
@@ -57,13 +57,18 @@ class LogStream extends Component {
     /**
      * The url for fetching events
      */
-    streamUrl: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
 
     /**
      * Object with mapping event fields to table
      */
     config: PropTypes.object,
   }
+
+  static defaultProps = {
+    config: {}
+  };
+
   constructor(props) {
     super(props)
     this.state = {
@@ -72,7 +77,7 @@ class LogStream extends Component {
     }
   }
   componentWillMount() {
-    this.source = new EventSource(this.props.streamUrl);
+    this.source = new EventSource(this.props.url);
     const { matching } = this.props.config;
     this.source.addEventListener('message', e => {
       const newEvent = createEvent(e, matching);
@@ -92,9 +97,9 @@ class LogStream extends Component {
 
     if (mapping && mapping.length) {
       headerRows = (
-        <tr className="react-event-log__header-row">
+        <tr className="react-log-stream__header-row">
           {mapping.map(field => (
-            <th className="react-event-log__header-row__cell" key={field.label}>{field.label}</th>
+            <th className="react-log-stream__header-row__cell" key={field.label}>{field.label}</th>
           ))}
         </tr>
       )
@@ -102,35 +107,35 @@ class LogStream extends Component {
         this.state.events.map((event, index) => (
           <tr
             style={(event.match) ? {backgroundColor: event.match.bgColorOnMatch} : {}}
-            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd')}
+            className={"react-log-stream__row " + (index % 2 === 0 ? 'react-log-stream__row--even' : 'react-log-stream__row--odd')}
             key={event.time}
           >
             {mapping.map(field => (
-              <td className="react-event-log__row__cell" key={field.label}>{getFieldValue(event.data, field)}</td>
+              <td className="react-log-stream__row__cell" key={field.label}>{getFieldValue(event.data, field)}</td>
             ))}
           </tr>
         ))
       )
     } else {
       headerRows = (
-        <tr className="react-event-log__header-row">
-          <th className="react-event-log__header-row__cell">{defaultColumn}</th>
+        <tr className="react-log-stream__header-row">
+          <th className="react-log-stream__header-row__cell">{defaultColumn}</th>
         </tr>
       )
       rows = (
         this.state.events.map((event, index) => (
           <tr
             style={(event.match) ? {backgroundColor: event.match.bgColorOnMatch} : {}}
-            className={"react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd')}
+            className={"react-log-stream__row " + (index % 2 === 0 ? 'react-log-stream__row--even' : 'react-log-stream__row--odd')}
             key={event.time}
           >
-            <td className="react-event-log__row__cell">{event.source}</td>
+            <td className="react-log-stream__row__cell">{event.source}</td>
           </tr>
         ))
       )
     }
     return (
-      <table className="react-event-log">
+      <table className="react-log-stream">
         <thead>
           {rows.length ? headerRows : null}
         </thead>
