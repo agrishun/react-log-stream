@@ -45,7 +45,7 @@ function createEvent(event, matching) {
     data: JSON.parse(event.data),
     source: event.data
   };
-  if (matching.length) {
+  if (matching && matching.length) {
     var _loop = function _loop(i) {
       var _matching$i = matching[i],
           pattern = _matching$i.pattern,
@@ -53,7 +53,7 @@ function createEvent(event, matching) {
           paths = _matching$i.paths;
 
       var isMatch = false;
-      if (paths.length) {
+      if (paths && paths.length) {
         isMatch = paths.every(function (path) {
           var fieldValue = _objectPath2.default.get(newEvent.data, path);
           return new RegExp(pattern).test(fieldValue);
@@ -100,7 +100,7 @@ var LogStream = function (_Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      this.source = new EventSource(this.props.streamUrl);
+      this.source = new EventSource(this.props.url);
       var matching = this.props.config.matching;
 
       this.source.addEventListener('message', function (e) {
@@ -118,9 +118,6 @@ var LogStream = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      // if (this.state.events.length > 10) {
-      //   this.source.close()
-      // }
       var mapping = this.props.config.mapping;
 
       var defaultColumn = '_source';
@@ -130,11 +127,11 @@ var LogStream = function (_Component) {
       if (mapping && mapping.length) {
         headerRows = _react2.default.createElement(
           'tr',
-          { className: 'react-event-log__header-row' },
+          { className: 'react-log-stream__header-row' },
           mapping.map(function (field) {
             return _react2.default.createElement(
               'th',
-              { className: 'react-event-log__header-row__cell', key: field.label },
+              { className: 'react-log-stream__header-row__cell', key: field.label },
               field.label
             );
           })
@@ -144,13 +141,13 @@ var LogStream = function (_Component) {
             'tr',
             {
               style: event.match ? { backgroundColor: event.match.bgColorOnMatch } : {},
-              className: "react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd'),
+              className: "react-log-stream__row " + (index % 2 === 0 ? 'react-log-stream__row--even' : 'react-log-stream__row--odd'),
               key: event.time
             },
             mapping.map(function (field) {
               return _react2.default.createElement(
                 'td',
-                { className: 'react-event-log__row__cell', key: field.label },
+                { className: 'react-log-stream__row__cell', key: field.label },
                 getFieldValue(event.data, field)
               );
             })
@@ -159,10 +156,10 @@ var LogStream = function (_Component) {
       } else {
         headerRows = _react2.default.createElement(
           'tr',
-          { className: 'react-event-log__header-row' },
+          { className: 'react-log-stream__header-row' },
           _react2.default.createElement(
             'th',
-            { className: 'react-event-log__header-row__cell' },
+            { className: 'react-log-stream__header-row__cell' },
             defaultColumn
           )
         );
@@ -171,12 +168,12 @@ var LogStream = function (_Component) {
             'tr',
             {
               style: event.match ? { backgroundColor: event.match.bgColorOnMatch } : {},
-              className: "react-event-log__row " + (index % 2 === 0 ? 'react-event-log__row--even' : 'react-event-log__row--odd'),
+              className: "react-log-stream__row " + (index % 2 === 0 ? 'react-log-stream__row--even' : 'react-log-stream__row--odd'),
               key: event.time
             },
             _react2.default.createElement(
               'td',
-              { className: 'react-event-log__row__cell' },
+              { className: 'react-log-stream__row__cell' },
               event.source
             )
           );
@@ -184,7 +181,7 @@ var LogStream = function (_Component) {
       }
       return _react2.default.createElement(
         'table',
-        { className: 'react-event-log' },
+        { className: 'react-log-stream' },
         _react2.default.createElement(
           'thead',
           null,
@@ -206,11 +203,14 @@ LogStream.propTypes = {
   /**
    * The url for fetching events
    */
-  streamUrl: _react.PropTypes.string.isRequired,
+  url: _react.PropTypes.string.isRequired,
 
   /**
    * Object with mapping event fields to table
    */
   config: _react.PropTypes.object
+};
+LogStream.defaultProps = {
+  config: {}
 };
 exports.default = LogStream;
