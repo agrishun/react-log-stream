@@ -1,6 +1,6 @@
 {
   "name": "react-log-stream",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React server-sent events logger",
   "author": "Anton Grishun <agrishun@me.com> (https://github.com/agrishun)",
   "bugs": {
